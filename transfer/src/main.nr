@@ -21,16 +21,20 @@ fn main(
 
     let computed_secret_and_nullifier_hash =
         std::hash::poseidon::bn254::hash_2([secret_1, nullifier_1]);
-    let secret_nullifier_amount_hash =
-        std::hash::poseidon::bn254::hash_2([computed_secret_and_nullifier_hash, commitment_amount_1]);
+    let secret_nullifier_amount_hash = std::hash::poseidon::bn254::hash_2([
+        computed_secret_and_nullifier_hash,
+        commitment_amount_1,
+    ]);
     let leaf = std::hash::poseidon::bn254::hash_2([secret_nullifier_amount_hash, token_address_1]);
     verify_membership(root_1, leaf, index_1, hashpath_1);
 
     // Refund deposit checks
     let computed_secret_nullifier_hash_refund =
         std::hash::poseidon::bn254::hash_2([refund_secret_1, refund_nullifier_1]);
-    let secret_nullifier_amount_hash_final =
-        std::hash::poseidon::bn254::hash_2([computed_secret_nullifier_hash_refund, refund_amount_1]);
+    let secret_nullifier_amount_hash_final = std::hash::poseidon::bn254::hash_2([
+        computed_secret_nullifier_hash_refund,
+        refund_amount_1,
+    ]);
     let refund_computed_commitment =
         std::hash::poseidon::bn254::hash_2([secret_nullifier_amount_hash_final, token_address_1]);
     println(refund_computed_commitment);
