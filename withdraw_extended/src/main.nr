@@ -55,6 +55,8 @@ fn main(
 
     verify_membership(root_2, leaf_fee, index_2, hashpath_2);
 
+    assert(leaf != leaf_fee);
+
     // new refund deposit checks
     let computed_secret_nullifier_hash_refund =
         std::hash::poseidon::bn254::hash_2([refund_secret_1, refund_nullifier_1]);
@@ -73,8 +75,10 @@ fn main(
         computed_secret_nullifier_hash_refund_fee,
         refund_amount_2,
     ]);
-    let refund_computed_commitment_fee =
-        std::hash::poseidon::bn254::hash_2([secret_nullifier_amount_hash_final_fee, token_address_2]);
+    let refund_computed_commitment_fee = std::hash::poseidon::bn254::hash_2([
+        secret_nullifier_amount_hash_final_fee,
+        token_address_2,
+    ]);
     assert(refund_commitment_hash_2 == refund_computed_commitment_fee);
 }
 
